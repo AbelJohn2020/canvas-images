@@ -1,0 +1,106 @@
+[
+    {
+        "id": "1",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQav-N3gRB6LuewHuEJsVU9-_qJXPFtwBD5QA&usqp=CAU",
+        "name": "mu",
+        "status": "Caballero dorado",
+        "home": "aries",
+        "list": 1
+    },
+    {
+        "id": "2",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXRjLWXe_WVsNMBDfnQAXmGrNFSXmC2i5BCA&usqp=CAU",
+        "name": "aldebaran",
+        "status": "Caballero dorado",
+        "home": "tauro",
+        "list": 1
+    },
+    {
+        "id": "3",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOv4tABhWxy9OsluyPochvE27fY_8X0W8I5g&usqp=CAU",
+        "name": "saga",
+        "status": "Caballero dorado",
+        "home": "geminis",
+        "list": 1
+    },
+    {
+        "id": "4",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXt_Vr9A36BYGqAkiGPrOWyAU0QKGH6jNNTA&usqp=CAU",
+        "name": "kanon",
+        "status": "Caballero dorado",
+        "home": "geminis",
+        "list": 1
+    },
+    {
+        "id": "5",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhswrNZw59iEgyTX_-qkAHLJmTRC_cTcwx6A&usqp=CAU",
+        "name": "mascara de muerte",
+        "status": "Caballero dorado",
+        "home": "cancer",
+        "list": 1
+    },
+    {
+        "id": "6",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBZd6FxJbptDujJS8qm8uP2jTJl5TsiT3h_A&usqp=CAU",
+        "name": "aioria",
+        "status": "Caballero dorado",
+        "home": "leo",
+        "list": 1
+    },
+    {
+        "id": "7",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8bC-EoRYC8Wh2Cr8l7MxuOS_ZMxG4_3jwGg&usqp=CAU",
+        "name": "shaka",
+        "status": "Caballero dorado",
+        "home": "virgo",
+        "list": 1
+    },
+    {
+        "id": "8",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQir2FfR5_ee-S-sYhdCPXd-v6l9bI58ATDNA&usqp=CAU",
+        "name": "dohko",
+        "status": "Caballero dorado",
+        "home": "libra",
+        "list": 1
+    },
+    {
+        "id": "9",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2fMA2kEs3rNLgd1bBcxhb5y577UKt5hS3qg&usqp=CAU",
+        "name": "milo",
+        "status": "Caballero dorado",
+        "home": "escorpio",
+        "list": 1
+    },
+    {
+        "id": "10",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW9uVNXts7Ry87Rq6Hop4xXqhxOgd9y9FhAw&usqp=CAU",
+        "name": "aioros",
+        "status": "Caballero dorado",
+        "home": "sagitario",
+        "list": 1
+    },
+    {
+        "id": "11",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFxiFn6M_yqFoQFMidy8Y4RliCrXiAmvoqdw&usqp=CAU",
+        "name": "shura",
+        "status": "Caballero dorado",
+        "home": "capricornio",
+        "list": 1
+    },
+    {
+        "id": "12",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaSRcbNVh8l5fKrJpxSQIZm6mbjSzfviheXg&usqp=CAU",
+        "name": "camus",
+        "status": "Caballero dorado",
+        "home": "acuario",
+        "list": 1
+    },
+    {
+        "id": "13",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1EWD4nL2jx9hLf__GwHhHlKTchtrhcVJIVg&usqp=CAU",
+        "name": "afrodita",
+        "status": "Caballero dorado",
+        "home": "piscis",
+        "list": 1
+    }
+]
