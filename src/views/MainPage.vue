@@ -2,6 +2,9 @@
     <div class="container">
         <div
             class="first-zone"
+            @drop="onDrop($event, 1)"
+            @dragenter.prevent
+            @dragover.prevent
         >
             <div
                 v-for="saint in getList(1)"
@@ -16,6 +19,9 @@
 
         <div
             class="second-zone"
+            @drop="onDrop($event, 2)"
+            @dragenter.prevent
+            @dragover.prevent
         >
             <div
                 v-for="saint in getList(2)"
@@ -43,11 +49,16 @@ export default {
         getList: function (list) {
             return this.data.filter(saint => saint.list === list)
         },
-        startDrag: function(event, saint) {
+        startDrag: (event, saint) => {
             event.dataTransfer.dropEffect='move';
             event.dataTransfer.effectAllowed='move';
             event.dataTransfer.setData('saintID', saint.id);
         },
+        onDrop: function(event, list) {
+            const saintID = event.dataTransfer.getData('saintID');
+            const saint = this.data.find(saint => saint.id === saintID );
+            saint.list = list;
+        }
     }
 }
 </script>
