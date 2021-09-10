@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div
+        <div 
             class="first-zone"
             @drop="onDrop($event, 1)"
             @dragenter.prevent
@@ -16,8 +16,7 @@
                 <img :src="saint.url" :alt="saint.name" class="first-image">
             </div>
         </div>
-
-        <div
+        <div 
             class="second-zone"
             @drop="onDrop($event, 2)"
             @dragenter.prevent
@@ -30,47 +29,53 @@
                 draggable="true"
                 @dragstart="startDrag($event, saint)"
             >
-                <ImageCropper :src="saint.url" :alt="saint.name" />
+                <ImageCropper
+                    :src="saint.url"
+                    :alt="saint.name"
+                    :destinationalt="saint.name"
+                />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import saintseiya from '../data/data.json';
-import ImageCropper from '../components/ImageCropper/ImageCropper.vue'
+// import saintseiya from '../data/data.json';
+import ImageCropper from '../components/ImageCropper.vue'
 
 export default {
-    name: 'MainPage',
+    name: 'OtherWay',
     components: {
-        ImageCropper,
-    },
-    data() {
-        return {
-            data: saintseiya,
-        };
+        ImageCropper
     },
 
+    computed: {
+        saintseiya() {
+            return this.$store.state.data;
+        }
+    },
+    
     methods: {
         getList: function (list) {
-            return this.data.filter(saint => saint.list === list)
+            return this.saintseiya.filter(saint => saint.list === list)
         },
         startDrag: (event, saint) => {
             event.dataTransfer.dropEffect='move';
             event.dataTransfer.effectAllowed='move';
-            event.dataTransfer.setData('saintID', saint.id);
+            event.dataTransfer.setData('saintID', saint.id)
         },
-        onDrop: function(event, list) {
+        onDrop: function (event, list) {
             const saintID = event.dataTransfer.getData('saintID');
-            const saint = this.data.find(saint => saint.id === saintID );
-            saint.list = list;
+            const saint = this.saintseiya.find( saint => saint.id === saintID )
+            saint.list = list
         }
     }
 }
 </script>
 
+
 <style>
-        .container {
+    .container {
         box-sizing: border-box;
         width: 100%;
         display: flex;
@@ -94,7 +99,6 @@ export default {
         width: 84%;
         padding: 2% 26%;
         display: flex;
-        flex-direction: row-reverse;
         justify-content: center;
         align-items: center;
     }
@@ -110,7 +114,6 @@ export default {
     .drag img {
         width: 100%;
         box-sizing: border-box;
-        max-height: 80vh;
     }
 
     .first-image {
