@@ -24,7 +24,7 @@
             @dragover.prevent
         >
             <div
-                v-for="saint in getList(2)"
+                v-for="saint in getList(2).slice(getList(2).length -1, getList(2).length)"
                 :key="saint.id"
                 class="drag"
                 draggable="true"
@@ -45,6 +45,7 @@ export default {
             data: saintseiya,
         };
     },
+
     methods: {
         getList: function (list) {
             return this.data.filter(saint => saint.list === list)
@@ -88,6 +89,7 @@ export default {
         width: 84%;
         padding: 2% 26%;
         display: flex;
+        flex-direction: row-reverse;
         justify-content: center;
         align-items: center;
     }
@@ -103,6 +105,7 @@ export default {
     .drag img {
         width: 100%;
         box-sizing: border-box;
+        max-height: 80vh;
     }
 
     .first-image {
