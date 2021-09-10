@@ -30,7 +30,7 @@
                 draggable="true"
                 @dragstart="startDrag($event, saint)"
             >
-                <img :src="saint.url" :alt="saint.name">
+                <ImageCropper :src="saint.url" :alt="saint.name" />
             </div>
         </div>
     </div>
@@ -38,9 +38,13 @@
 
 <script>
 import saintseiya from '../data/data.json';
+import ImageCropper from '../components/ImageCropper/ImageCropper.vue'
 
 export default {
     name: 'MainPage',
+    components: {
+        ImageCropper,
+    },
     data() {
         return {
             data: saintseiya,

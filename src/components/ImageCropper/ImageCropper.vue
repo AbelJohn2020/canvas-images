@@ -22,5 +22,13 @@
                 image: {},
             };
         },
+        mounted() {
+            this.image = this.$refs.image;
+            this.cropper = new Cropper( this.image, {
+                zoomable: false,
+                scalable: false,
+                aspectRatio: 61/80,
+            })
+        }
     }
 </script>
