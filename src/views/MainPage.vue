@@ -40,6 +40,7 @@
 import saintseiya from '../data/data.json';
 
 export default {
+    name: 'MainPage',
     data() {
         return {
             data: saintseiya,
