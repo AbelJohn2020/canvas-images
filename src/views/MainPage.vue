@@ -7,6 +7,8 @@
                 v-for="saint in getList(1)"
                 :key="saint.id"
                 class="drag"
+                draggable="true"
+                @dragstart="startDrag($event, saint)"
             >
                 <img :src="saint.url" :alt="saint.name" class="first-image">
             </div>
@@ -19,6 +21,8 @@
                 v-for="saint in getList(2)"
                 :key="saint.id"
                 class="drag"
+                draggable="true"
+                @dragstart="startDrag($event, saint)"
             >
                 <img :src="saint.url" :alt="saint.name">
             </div>
@@ -38,6 +42,11 @@ export default {
     methods: {
         getList: function (list) {
             return this.data.filter(saint => saint.list === list)
+        },
+        startDrag: function(event, saint) {
+            event.dataTransfer.dropEffect='move';
+            event.dataTransfer.effectAllowed='move';
+            event.dataTransfer.setData('saintID', saint.id);
         },
     }
 }
@@ -70,5 +79,22 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .drag {
+        width: 100%;
+        background: #EEEEEE;
+        padding: 0;
+        margin: 0 0 8px 0;
+        box-sizing: border-box;
+    }
+
+    .drag img {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .first-image {
+        cursor: pointer;
     }
 </style>
