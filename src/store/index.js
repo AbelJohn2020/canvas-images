@@ -7,7 +7,13 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         data: saintseiya,
+        editImage: false,
         cutButton: false,
         saveButton: false,
+    },
+    mutations: {
+        setEditImage(state) {
+            state.editImage = true;
+        },
     }
 })

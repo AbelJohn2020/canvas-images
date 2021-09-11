@@ -29,10 +29,21 @@
                 draggable="true"
                 @dragstart="startDrag($event, saint)"
             >
+                <div class="normal-image" v-if="myStore.state.editImage === false"> 
+                        <img 
+                            class="default-image" 
+                            ref='secondImage' 
+                            :src="saint.url"
+                            :alt="saint.name"
+                            @click="handleMouseDown($event, myStore)"
+                        >
+                </div>
                 <ImageCropper
                     :src="saint.url"
                     :alt="saint.name"
                     :destinationalt="saint.name"
+                    :editedImg="'third-image'"
+                    v-else
                 />
             </div>
         </div>
@@ -52,7 +63,10 @@ export default {
     computed: {
         saintseiya() {
             return this.$store.state.data;
-        }
+        },
+        myStore() {
+            return this.$store;
+        },
     },
     
     methods: {
@@ -68,6 +82,16 @@ export default {
             const saintID = event.dataTransfer.getData('saintID');
             const saint = this.saintseiya.find( saint => saint.id === saintID )
             saint.list = list
+        },
+        handleMouseDown: (event, store) => {
+            const e = event.target;
+            console.log(store.state.editImage, e)
+            if(e) {
+                return store.state.editImage = true;
+            } else {
+                console.log(store.state.editImage, 'else')
+            }
+            console.log(store.state.editImage, 'out')
         }
     }
 }
@@ -86,12 +110,12 @@ export default {
     .first-zone,
     .second-zone {
         background: #343434;
-        padding: 16px;
         max-height: 100vh;
     }
 
     .first-zone {
         width: 16%;
+        padding: 16px;
         overflow-y: scroll;
     }
 
@@ -117,6 +141,14 @@ export default {
     }
 
     .first-image {
+        cursor: pointer;
+    }
+
+    .third-image {
+        opacity: 0.7;
+    }
+
+    .default-image {
         cursor: pointer;
     }
 </style>
