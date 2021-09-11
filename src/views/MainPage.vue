@@ -35,7 +35,7 @@
                             ref='secondImage' 
                             :src="saint.url"
                             :alt="saint.name"
-                            @click="handleMouseDown($event, myStore)"
+                            @dblclick="handleDobleClick($event, myStore)"
                         >
                 </div>
                 <ImageCropper
@@ -43,6 +43,7 @@
                     :alt="saint.name"
                     :destinationalt="saint.name"
                     :editedImg="'third-image'"
+                    :className="`${ myStore.state.cutButton ? 'noImage' : 'cropper' }`"
                     v-else
                 />
             </div>
@@ -51,7 +52,6 @@
 </template>
 
 <script>
-// import saintseiya from '../data/data.json';
 import ImageCropper from '../components/ImageCropper.vue'
 
 export default {
@@ -83,15 +83,11 @@ export default {
             const saint = this.saintseiya.find( saint => saint.id === saintID )
             saint.list = list
         },
-        handleMouseDown: (event, store) => {
+        handleDobleClick: (event, store) => {
             const e = event.target;
-            console.log(store.state.editImage, e)
             if(e) {
                 return store.state.editImage = true;
-            } else {
-                console.log(store.state.editImage, 'else')
             }
-            console.log(store.state.editImage, 'out')
         }
     }
 }
@@ -133,6 +129,7 @@ export default {
         padding: 0;
         margin: 0 0 8px 0;
         box-sizing: border-box;
+        overflow: hidden;
     }
 
     .drag img {
@@ -144,11 +141,20 @@ export default {
         cursor: pointer;
     }
 
-    .third-image {
+    /* .third-image {
         opacity: 0.7;
-    }
+    } */
 
     .default-image {
         cursor: pointer;
+    }
+
+    .noImage {
+        opacity: 0.1;
+        display: none;
+    }
+
+    .cropper {
+        display: block;
     }
 </style>

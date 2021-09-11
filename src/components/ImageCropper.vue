@@ -1,12 +1,14 @@
 <template>
     <div class="container-image">
-        <div class="edit-image">
-            <div v-if="this.$store.state.cutButton === false" class="cropper">
-                <img :class="className" ref="image" :src="src" :alt="alt">
-            </div>
-            <div v-else class="new-image">
-                <img :src="destination" :alt="destinationalt" :class="editedImg">
-            </div>
+        <div 
+            v-if="myState.cutButton === false" 
+            :class="className"
+            @click="handleClickEditImage($event, myState)"
+        >
+            <img ref="image" :src="src" :alt="alt">
+        </div>
+        <div v-else class="new-image">
+            <img :src="destination" :alt="destinationalt" :class="editedImg" @dblclick="dobleClickEditImage($event, myState)">
         </div>
     </div>
 </template>
@@ -28,12 +30,16 @@
                 cropper: {},
                 destination: {},
                 image: {},
-                secondImage: {},
             };
         },
 
+        computed: {
+            myState() {
+                return this.$store.state;
+            },
+        },
+
         mounted() {
-            console.log(this.$store.state.editImage, 'cropper')
             this.image = this.$refs.image;
             this.cropper = new Cropper( this.image, {
                 zoomable: false,
@@ -45,12 +51,31 @@
                 }
             })
         },
+        methods: {
+            handleClickEditImage: (event, state) => {
+                const e = event.target;
+                if(e) {
+                    return state.cutButton = true;
+                }
+            },
+
+            dobleClickEditImage: (event, state) => {
+                const e = event.target;
+                if(e) {
+                    return state.cutButton = false, state.editImage = false ;
+                }
+            },
+        },
     }
 </script>
 
 <style>
+    .container-image {
+        overflow: hidden;
+    }
     .new-image {
-        width: 16%;
-        top: 5%;  
+        width: 100%;
+        margin: 100% 0 0 0;
+        box-sizing: border-box;
     }
 </style>

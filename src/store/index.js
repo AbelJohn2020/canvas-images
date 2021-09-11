@@ -11,9 +11,4 @@ export default new Vuex.Store({
         cutButton: false,
         saveButton: false,
     },
-    mutations: {
-        setEditImage(state) {
-            state.editImage = true;
-        },
-    }
 })
