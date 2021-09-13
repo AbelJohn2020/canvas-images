@@ -57,6 +57,7 @@
             } else {
                 this.cropper.canvas.style.display = '';
                 this.cropper.cropper.style.display='';
+                this.cropper.canvas.parentElement.style.background='#686868';
                 this.image.style.display='none';
             }
         },
@@ -71,6 +72,7 @@
                     crop: () => {
                         const canvas = this.cropper.getCroppedCanvas();
                         this.destination = canvas.toDataURL('image/png');
+                        this.cropper.canvas.parentElement.style.background='#686868';
                     }
                 })
             },

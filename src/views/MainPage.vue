@@ -26,7 +26,7 @@
             <div
                 v-for="saint in getList(2).slice(getList(2).length -1, getList(2).length)"
                 :key="saint.id"
-                class="drag"
+                class="second-drag"
                 @dragstart="startDrag($event, saint)"
             >
                 <div class="normal-image" v-if="myStore.state.editImage === false"> 
@@ -115,6 +115,7 @@ export default {
     .second-zone {
         background: #343434;
         max-height: 100vh;
+        box-sizing: border-box;
     }
 
     .first-zone {
@@ -125,9 +126,9 @@ export default {
 
     .second-zone {
         width: 84%;
-        box-sizing: border-box;
         display: grid;
         grid-template-columns: 26% 48% 26%;
+        grid-template-rows: 100%;
     }
 
     .drag {
@@ -135,12 +136,37 @@ export default {
         padding: 0;
         margin: 0 0 8px 0;
         box-sizing: border-box;
-        overflow: hidden;
+    }
+
+    .second-drag {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .normal-image {
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .second-drag img,
+    .drag img {
+        box-sizing: border-box;
     }
 
     .drag img {
         width: 100%;
-        box-sizing: border-box;
+    }
+
+    .second-drag img {
+        width: 80%;
     }
 
     .first-image {
@@ -149,5 +175,7 @@ export default {
 
     .default-image {
         cursor: pointer;
+        /* width: 100%;
+        box-sizing: border-box; */
     }
 </style>
