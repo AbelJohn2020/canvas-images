@@ -2,7 +2,7 @@
     <div class="container-image">
         <div 
             v-if="myState.cutButton === false" 
-            :class="className"
+            class="edit-image-box"
             @click="handleClickEditImage($event, myState)"
         >
             <img ref="image" :src="src" :alt="alt" draggable="true">
@@ -52,11 +52,11 @@
         updated() {
             if(this.myState.cutButton === true){
                 this.cropper.canvas.style.display = 'none';
-                this.cropper.cropper.style.display='none';
+                this.cropper.cropper.style.display= 'none';
                 this.image.style.display='';
             } else {
                 this.cropper.canvas.style.display = '';
-                this.cropper.cropper.style.display='';
+                this.cropper.cropper.style.display= '';
                 this.cropper.canvas.parentElement.style.background='#686868';
                 this.image.style.display='none';
             }
@@ -100,10 +100,17 @@
         overflow: hidden;
     }
 
+    .edit-image-box,
     .new-image {
         width: 100%;
         margin: 0;
         box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .new-image {
         cursor: pointer;
     }
 
