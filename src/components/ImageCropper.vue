@@ -8,7 +8,12 @@
             <img ref="image" :src="src" :alt="alt">
         </div>
         <div v-else class="new-image">
-            <img :src="destination" :alt="destinationalt" :class="editedImg" @dblclick="dobleClickEditImage($event, myState)">
+            <img 
+                :src="destination" 
+                :alt="destinationalt" 
+                class="third-image" 
+                @dblclick="dobleClickEditImage($event, myState)"
+            >
         </div>
     </div>
 </template>
@@ -40,29 +45,46 @@
         },
 
         mounted() {
-            this.image = this.$refs.image;
-            this.cropper = new Cropper( this.image, {
-                zoomable: false,
-                scalable: false,
-                aspectRatio: 61/80,
-                crop: () => {
-                    const canvas = this.cropper.getCroppedCanvas();
-                    this.destination = canvas.toDataURL('image/png');
-                }
-            })
+            this.croppedCanvas();
         },
+
+        updated() {
+            if(this.myState.cutButton === true){
+                this.cropper.canvas.style.display = 'none';
+                this.cropper.cropper.style.display='none';
+                this.image.style.display='';
+            } else {
+                this.cropper.canvas.style.display = '';
+                this.cropper.cropper.style.display='';
+                this.image.style.display='none';
+            }
+        },
+
         methods: {
+            croppedCanvas() {
+                this.image = this.$refs.image;
+                this.cropper = new Cropper( this.image, {
+                    zoomable: false,
+                    scalable: false,
+                    aspectRatio: 61/80,
+                    crop: () => {
+                        const canvas = this.cropper.getCroppedCanvas();
+                        this.destination = canvas.toDataURL('image/png');
+                    }
+                })
+            },
+
             handleClickEditImage: (event, state) => {
                 const e = event.target;
                 if(e) {
-                    return state.cutButton = true;
+                    return state.cutButton = true, state.editImage = true;
                 }
             },
 
             dobleClickEditImage: (event, state) => {
                 const e = event.target;
                 if(e) {
-                    return state.cutButton = false, state.editImage = false ;
+                    return state.cutButton = false, state.editImage = true ;
                 }
             },
         },
@@ -71,11 +93,13 @@
 
 <style>
     .container-image {
+        width: 100%;
         overflow: hidden;
     }
     .new-image {
         width: 100%;
-        margin: 100% 0 0 0;
+        margin: 0;
         box-sizing: border-box;
+        cursor: pointer;
     }
 </style>

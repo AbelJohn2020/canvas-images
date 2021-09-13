@@ -32,7 +32,6 @@
                 <div class="normal-image" v-if="myStore.state.editImage === false"> 
                         <img 
                             class="default-image" 
-                            ref='secondImage' 
                             :src="saint.url"
                             :alt="saint.name"
                             @dblclick="handleDobleClick($event, myStore)"
@@ -42,8 +41,6 @@
                     :src="saint.url"
                     :alt="saint.name"
                     :destinationalt="saint.name"
-                    :editedImg="'third-image'"
-                    :className="`${ myStore.state.cutButton ? 'noImage' : 'cropper' }`"
                     v-else
                 />
             </div>
@@ -125,7 +122,6 @@ export default {
 
     .drag {
         width: 100%;
-        background: #EEEEEE;
         padding: 0;
         margin: 0 0 8px 0;
         box-sizing: border-box;
@@ -141,20 +137,7 @@ export default {
         cursor: pointer;
     }
 
-    /* .third-image {
-        opacity: 0.7;
-    } */
-
     .default-image {
         cursor: pointer;
-    }
-
-    .noImage {
-        opacity: 0.1;
-        display: none;
-    }
-
-    .cropper {
-        display: block;
     }
 </style>
