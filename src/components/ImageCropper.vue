@@ -5,13 +5,14 @@
             :class="className"
             @click="handleClickEditImage($event, myState)"
         >
-            <img ref="image" :src="src" :alt="alt">
+            <img ref="image" :src="src" :alt="alt" draggable="true">
         </div>
         <div v-else class="new-image">
             <img 
                 :src="destination" 
                 :alt="destinationalt" 
-                class="third-image" 
+                class="third-image"
+                draggable="true"
                 @dblclick="dobleClickEditImage($event, myState)"
             >
         </div>
@@ -96,10 +97,16 @@
         width: 100%;
         overflow: hidden;
     }
+
     .new-image {
         width: 100%;
         margin: 0;
         box-sizing: border-box;
         cursor: pointer;
+    }
+
+    .third-image {
+        width: 100%;
+        display: flex;
     }
 </style>

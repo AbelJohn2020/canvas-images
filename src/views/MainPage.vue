@@ -22,11 +22,11 @@
             @dragenter.prevent
             @dragover.prevent
         >
+            <div class="first-block" @dblclick="handleClickOut($event, myStore)"></div>
             <div
                 v-for="saint in getList(2).slice(getList(2).length -1, getList(2).length)"
                 :key="saint.id"
                 class="drag"
-                draggable="true"
                 @dragstart="startDrag($event, saint)"
             >
                 <div class="normal-image" v-if="myStore.state.editImage === false"> 
@@ -34,6 +34,7 @@
                             class="default-image" 
                             :src="saint.url"
                             :alt="saint.name"
+                            draggable="true"
                             @dblclick="handleDobleClick($event, myStore)"
                         >
                 </div>
@@ -44,6 +45,7 @@
                     v-else
                 />
             </div>
+            <div class="second-block" @dblclick="handleClickOut($event, myStore)"></div>
         </div>
     </div>
 </template>
@@ -85,6 +87,15 @@ export default {
             if(e) {
                 return store.state.editImage = true;
             }
+        },
+        handleClickOut: (event, store) => {
+            const e = event.target;
+            if(e) {
+                if(store.state.editImage === true && store.state.cutButton === true){
+                    console.log('click out')
+                    return store.state.cutButton = false, store.state.editImage = false ;
+                }
+            }
         }
     }
 }
@@ -114,10 +125,9 @@ export default {
 
     .second-zone {
         width: 84%;
-        padding: 2% 26%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: 26% 48% 26%;
     }
 
     .drag {
