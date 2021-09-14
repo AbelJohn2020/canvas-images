@@ -1,62 +1,75 @@
 <template>
     <div class="container">
-        <div 
-            class="first-zone"
-            @drop="onDrop($event, 1)"
-            @dragenter.prevent
-            @dragover.prevent
-        >
-            <div
-                v-for="saint in getList(1)"
-                :key="saint.id"
-                class="drag"
-                draggable="true"
-                @dragstart="startDrag($event, saint)"
+        <div class="first-board">
+            <div 
+                class="first-board__first-zone"
+                @drop="onDrop($event, 1)"
+                @dragenter.prevent
+                @dragover.prevent
             >
-                <img :src="saint.url" :alt="saint.name" class="first-image">
+                <div
+                    v-for="saint in getList(1)"
+                    :key="saint.id"
+                    class="first-board__first-zone--drag"
+                    draggable="true"
+                    @dragstart="startDrag($event, saint)"
+                >
+                    <img :src="saint.url" :alt="saint.name" class="first-image">
+                </div>
             </div>
         </div>
-        <div 
-            class="second-zone"
-            @drop="onDrop($event, 2)"
-            @dragenter.prevent
-            @dragover.prevent
-        >
-            <div class="first-block" @dblclick="handleClickOut($event, myStore)"></div>
-            <div
-                v-for="saint in getList(2).slice(getList(2).length -1, getList(2).length)"
-                :key="saint.id"
-                class="second-drag"
-                @dragstart="startDrag($event, saint)"
+        <div class="second-board">
+            <div 
+                class="second-board__second-zone"
+                @drop="onDrop($event, 2)"
+                @dragenter.prevent
+                @dragover.prevent
             >
-                <div class="normal-image" v-if="myStore.state.editImage === false"> 
-                        <img 
-                            class="default-image" 
-                            :src="saint.url"
-                            :alt="saint.name"
-                            draggable="true"
-                            @dblclick="handleDobleClick($event, myStore)"
-                        >
+                <div class="second-board__second-zone--first-block" @dblclick="handleClickOut($event, myStore)"></div>
+                <div
+                    v-for="saint in getList(2).slice(getList(2).length -1, getList(2).length)"
+                    :key="saint.id"
+                    class="second-board__second-zone--second-drag"
+                    @dragstart="startDrag($event, saint)"
+                >
+                    <div class="normal-image" v-if="myStore.state.editImage === false"> 
+                            <img 
+                                class="default-image" 
+                                :src="saint.url"
+                                :alt="saint.name"
+                                draggable="true"
+                                @dblclick="handleDobleClick($event, myStore)"
+                            >
+                    </div>
+                    <ImageCropper
+                        :src="saint.url"
+                        :alt="saint.name"
+                        :destinationalt="saint.name"
+                        v-else
+                    />
                 </div>
-                <ImageCropper
-                    :src="saint.url"
-                    :alt="saint.name"
-                    :destinationalt="saint.name"
-                    v-else
-                />
+                <div class="second-board__second-zone--second-block" @dblclick="handleClickOut($event, myStore)"></div>
             </div>
-            <div class="second-block" @dblclick="handleClickOut($event, myStore)"></div>
+            <div class="edition">
+                <Button :className="'cut-button btn'" :classNameDisable="'cut-button'">
+                    <Icon type="download" class="cut-button__icon"/>
+                </Button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import ImageCropper from '../components/ImageCropper.vue'
+import ImageCropper from '../components/ImageCropper.vue';
+import Button from '../components/Button.vue';
+import { Icon } from 'ant-design-vue';
 
 export default {
     name: 'OtherWay',
     components: {
-        ImageCropper
+        ImageCropper,
+        Button,
+        Icon
     },
 
     computed: {
@@ -96,7 +109,7 @@ export default {
                     return store.state.cutButton = false, store.state.editImage = false ;
                 }
             }
-        }
+        },
     }
 }
 </script>
@@ -111,41 +124,83 @@ export default {
         padding: 0;
     }
 
-    .first-zone,
-    .second-zone {
+    .first-board {
+        width: 16%;
         background: #343434;
+        padding: 0 4px 0 0;
+    }
+
+    .first-board__first-zone,
+    .second-board__second-zone {
         max-height: 100vh;
         box-sizing: border-box;
     }
 
-    .first-zone {
-        width: 16%;
-        padding: 16px;
+    .first-board__first-zone {
+        width: 100%;
+        padding: 16px 12px 16px 16px;
+        overflow-x: hidden;
         overflow-y: scroll;
     }
 
-    .second-zone {
+    .first-board__first-zone::-webkit-scrollbar {
+        width: 8px;
+        background: #343434;
+    }
+
+    .first-board__first-zone::-webkit-scrollbar-thumb {
+        background: #7F7F7F;
+        border-radius: 4px;
+    }
+    
+    .first-board__first-zone::-webkit-scrollbar-thumb:hover {
+        background: #b3b3b3;
+        box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    .second-board {
         width: 84%;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 92% 8%;
+    }
+
+    .second-board__second-zone {
+        width: 100%;
+        background: #7F7F7F;
         display: grid;
         grid-template-columns: 26% 48% 26%;
         grid-template-rows: 100%;
     }
 
-    .drag {
+    .first-board__first-zone--drag {
         width: 100%;
         padding: 0;
         margin: 0 0 8px 0;
         box-sizing: border-box;
     }
 
-    .second-drag {
+    .second-board__second-zone--second-drag {
         width: 100%;
-        padding: 0;
+        padding: 8%;
         margin: 0;
         box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .second-board__second-zone--second-drag img,
+    .first-board__first-zone--drag img {
+        box-sizing: border-box;
+    }
+
+    .first-board__first-zone--drag img {
+        width: 100%;
+    }
+
+    .second-board__second-zone--second-drag img {
+        width: 80%;
     }
 
     .normal-image {
@@ -156,26 +211,41 @@ export default {
         justify-content: center;
     }
 
-    .second-drag img,
-    .drag img {
-        box-sizing: border-box;
-    }
-
-    .drag img {
-        width: 100%;
-    }
-
-    .second-drag img {
-        width: 80%;
-    }
-
     .first-image {
         cursor: pointer;
     }
 
     .default-image {
         cursor: pointer;
-        /* width: 100%;
-        box-sizing: border-box; */
+    }
+
+    .edition {
+        background: #F0F0F0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cut-button {
+        background: transparent;
+        padding: 4px 8px;
+        outline: none;
+        border-radius: 8px;
+    }
+
+    .btn {
+        border: #7F7F7F solid 2px;
+        color: #7F7F7F;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #7F7F7F;
+        color: #232323;
+    }
+
+    .cut-button__icon {
+        background: transparent;
+        font-size: 16px;
     }
 </style>
