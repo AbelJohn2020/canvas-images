@@ -241,7 +241,7 @@ export default {
 
     .btn:hover {
         background: #7F7F7F;
-        color: #232323;
+        color: #F0F0F0;
     }
 
     .cut-button__icon {

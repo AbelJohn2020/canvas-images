@@ -10,6 +10,9 @@ export default new Vuex.Store({
         editImage: false,
         cutButton: false,
         saveButton: false,
+        cropper: {},
+        destination: {},
+        image: {},
         nameButton: '',
     },
 })

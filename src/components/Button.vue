@@ -27,6 +27,11 @@
             myState() {
                 return this.$store.state;
             }
+        },
+        methods: {
+            download: () => {
+                
+            }
         }
     }
 </script>

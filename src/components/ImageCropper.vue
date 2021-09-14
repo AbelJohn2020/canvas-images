@@ -9,7 +9,7 @@
         </div>
         <div v-else class="new-image">
             <img 
-                :src="destination" 
+                :src="myState.destination" 
                 :alt="destinationalt" 
                 class="third-image"
                 draggable="true"
@@ -31,13 +31,6 @@
             editedImg: String,
             destinationalt:String,
         },
-        data() {
-            return {
-                cropper: {},
-                destination: {},
-                image: {},
-            };
-        },
 
         computed: {
             myState() {
@@ -51,28 +44,28 @@
 
         updated() {
             if(this.myState.cutButton === true){
-                this.cropper.canvas.style.display = 'none';
-                this.cropper.cropper.style.display= 'none';
-                this.image.style.display='';
+                this.myState.cropper.canvas.style.display = 'none';
+                this.myState.cropper.cropper.style.display= 'none';
+                this.myState.image.style.display='';
             } else {
-                this.cropper.canvas.style.display = '';
-                this.cropper.cropper.style.display= '';
-                this.cropper.canvas.parentElement.style.background='#FFFFFF';
-                this.image.style.display='none';
+                this.myState.cropper.canvas.style.display = '';
+                this.myState.cropper.cropper.style.display= '';
+                this.myState.cropper.canvas.parentElement.style.background='#FFFFFF';
+                this.myState.image.style.display='none';
             }
         },
 
         methods: {
             croppedCanvas() {
-                this.image = this.$refs.image;
-                this.cropper = new Cropper( this.image, {
+                this.myState.image = this.$refs.image;
+                this.myState.cropper = new Cropper( this.myState.image, {
                     zoomable: false,
                     scalable: false,
                     aspectRatio: 61/80,
                     crop: () => {
-                        const canvas = this.cropper.getCroppedCanvas();
-                        this.destination = canvas.toDataURL('image/png');
-                        this.cropper.canvas.parentElement.style.background='#FFFFFF';
+                        const canvas = this.myState.cropper.getCroppedCanvas();
+                        this.myState.destination = canvas.toDataURL('image/png');
+                        this.myState.cropper.canvas.parentElement.style.background='#FFFFFF';
                     }
                 })
             },
