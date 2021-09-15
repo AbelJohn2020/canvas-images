@@ -65,7 +65,7 @@
                     :className="'rotate-button btn'" 
                     :classNameDisable="'rotate-button'"
                     :handleClick="handleRotateDeg"
-                    :conditional="rotateConditional(myStore, getList(2))"
+                    :conditional="rotateConditional(getList(2))"
                 >
                     {{ myStore.state.position + '°' }}
                 </Button>
@@ -130,11 +130,9 @@
                     return true;
                 }
             },
-            rotateConditional: (myStore, getList) => {
+            rotateConditional: (getList) => {
                 if( getList.length > 0) {
-                    if(myStore.state.cutButton === true && myStore.state.editImage === true || myStore.state.cutButton === false && myStore.state.editImage === false) {
-                        return true
-                    }
+                    return true
                 }
             },
 
