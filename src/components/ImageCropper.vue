@@ -2,6 +2,7 @@
     <div class="container-image">
         <div 
             v-if="myState.cutButton === false" 
+            id="edition-image"
             class="edit-image-box"
             @click="handleClickEditImage($event, myState)"
         >
@@ -12,6 +13,7 @@
                 :src="myState.destination" 
                 :alt="destinationalt" 
                 class="third-image"
+                id="edition-image"
                 draggable="true"
                 @dblclick="dobleClickEditImage($event, myState)"
             >

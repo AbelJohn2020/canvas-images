@@ -37,6 +37,7 @@
                                 class="default-image" 
                                 :src="saint.url"
                                 :alt="saint.name"
+                                id="edition-image"
                                 draggable="true"
                                 @dblclick="handleDobleClick($event, myStore)"
                             >
@@ -51,8 +52,22 @@
                 <div class="second-board__second-zone--second-block" @dblclick="handleClickOut($event, myStore)"></div>
             </div>
             <div class="edition">
-                <Button :className="'cut-button btn'" :classNameDisable="'cut-button'">
+                <Button 
+                    :className="'cut-button btn'" 
+                    :classNameDisable="'cut-button'"
+                    :handleClick="download"
+                    :conditional="downloadConditional(myStore)"
+                >
                     <Icon type="download" class="cut-button__icon"/>
+                </Button>
+
+                <Button 
+                    :className="'rotate-button btn'" 
+                    :classNameDisable="'rotate-button'"
+                    :handleClick="handleRotateDeg"
+                    :conditional="rotateConditional(myStore, getList(2))"
+                >
+                    {{ myStore.state.position + '°' }}
                 </Button>
             </div>
         </div>
@@ -60,58 +75,105 @@
 </template>
 
 <script>
-import ImageCropper from '../components/ImageCropper.vue';
-import Button from '../components/Button.vue';
-import { Icon } from 'ant-design-vue';
+    import ImageCropper from '../components/ImageCropper.vue';
+    import Button from '../components/Button.vue';
+    import { Icon } from 'ant-design-vue';
+    import axios from 'axios';
 
-export default {
-    name: 'OtherWay',
-    components: {
-        ImageCropper,
-        Button,
-        Icon
-    },
+    export default {
+        name: 'OtherWay',
+        components: {
+            ImageCropper,
+            Button,
+            Icon
+        },
 
-    computed: {
-        saintseiya() {
-            return this.$store.state.data;
+        computed: {
+            saintseiya() {
+                return this.$store.state.data;
+            },
+            myStore() {
+                return this.$store;
+            },
         },
-        myStore() {
-            return this.$store;
-        },
-    },
-    
-    methods: {
-        getList: function (list) {
-            return this.saintseiya.filter(saint => saint.list === list)
-        },
-        startDrag: (event, saint) => {
-            event.dataTransfer.dropEffect='move';
-            event.dataTransfer.effectAllowed='move';
-            event.dataTransfer.setData('saintID', saint.id)
-        },
-        onDrop: function (event, list) {
-            const saintID = event.dataTransfer.getData('saintID');
-            const saint = this.saintseiya.find( saint => saint.id === saintID )
-            saint.list = list
-        },
-        handleDobleClick: (event, store) => {
-            const e = event.target;
-            if(e) {
-                return store.state.editImage = true;
-            }
-        },
-        handleClickOut: (event, store) => {
-            const e = event.target;
-            if(e) {
-                if(store.state.editImage === true && store.state.cutButton === true){
-                    console.log('click out')
-                    return store.state.cutButton = false, store.state.editImage = false ;
+        methods: {
+            getList: function (list) {
+                return this.saintseiya.filter(saint => saint.list === list)
+            },
+            startDrag: (event, saint) => {
+                event.dataTransfer.dropEffect='move';
+                event.dataTransfer.effectAllowed='move';
+                event.dataTransfer.setData('saintID', saint.id)
+            },
+            onDrop: function (event, list) {
+                const saintID = event.dataTransfer.getData('saintID');
+                const saint = this.saintseiya.find( saint => saint.id === saintID )
+                saint.list = list
+            },
+            handleDobleClick: (event, store) => {
+                const e = event.target;
+                if(e) {
+                    return store.state.editImage = true;
+                }
+            },
+            handleClickOut: (event, store) => {
+                const e = event.target;
+                if(e) {
+                    if(store.state.editImage === true && store.state.cutButton === true){
+                        return store.state.cutButton = false, store.state.editImage = false ;
+                    }
+                }
+            },
+
+            downloadConditional: (myStore) => {
+                if(myStore.state.cutButton === true && myStore.state.editImage === true){
+                    return true;
+                }
+            },
+            rotateConditional: (myStore, getList) => {
+                if( getList.length > 0) {
+                    if(myStore.state.cutButton === true && myStore.state.editImage === true || myStore.state.cutButton === false && myStore.state.editImage === false) {
+                        return true
+                    }
+                }
+            },
+
+            fileDownload: ( response, item ) => {
+                    const headers = response.headers;
+                    const dataType = response.data.type.split('/');
+                    const extension = dataType[0] === 'image' ? dataType[1] : 'png';
+                    const blob = new Blob([response.data], {type: headers['content-type']});
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = `${item.alt}.${extension}`;
+                    link.click();
+                    link.remove();
+                },
+            download() {
+                axios({
+                    method: 'get',
+                    url: this.myStore.state.destination,
+                    responseType: 'blob',
+                })
+                    .then(res => {
+                        this.fileDownload(res, this.myStore.state.image);
+                        this.myStore.state.editImage = false;
+                        this.myStore.state.cutButton = false;
+                    })
+                    .catch( e => console.log(e))
+            },
+
+            handleRotateDeg: function() {
+                if ( this.myStore.state.position >= 270 ) {
+                    this.myStore.state.position = 0;
+                    document.getElementById('edition-image').style.transform = `rotate(0deg)`;
+                } else {
+                    this.myStore.state.position += 90;
+                    document.getElementById('edition-image').style.transform = `rotate(${this.myStore.state.position}deg)`;
                 }
             }
-        },
+        }
     }
-}
 </script>
 
 
@@ -226,11 +288,20 @@ export default {
         justify-content: center;
     }
 
+    .rotate-button,
     .cut-button {
         background: transparent;
-        padding: 4px 8px;
+        margin: 0 8px 0 0;
         outline: none;
         border-radius: 8px;
+    }
+
+    .cut-button {
+        padding: 4px 8px;
+    }
+
+    .rotate-button {
+        padding: 6px 10px;
     }
 
     .btn {

@@ -14,5 +14,6 @@ export default new Vuex.Store({
         destination: {},
         image: {},
         nameButton: '',
+        position: 0,
     },
 })
